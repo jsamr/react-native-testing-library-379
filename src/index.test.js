@@ -19,7 +19,7 @@ const Dummy = forwardRef(function Dummy(props, ref) {
     }),
     [loadCycleId]
   );
-  return <Text testID={`load-cycle-${loadCycleId}`} {...props}>{loadCycleId}</Text>
+  return <Text {...props}>{`load-cycle-${loadCycleId}`}</Text>
 });
 
 class Owner extends PureComponent {
@@ -36,11 +36,11 @@ class Owner extends PureComponent {
 
 describe("Owner component", () => {
   it("should not trow errors in the console", async () => {
-    const { findByTestId, UNSAFE_getByType } = render(<Owner />);
+    const { findByText, UNSAFE_getByType } = render(<Owner />);
     const result = UNSAFE_getByType(Owner);
     expect(result.instance.reload).toBeTruthy();
-    await findByTestId("load-cycle-0");
+    await findByText("load-cycle-0");
     result.instance.reload();
-    await findByTestId("load-cycle-1");
+    await findByText("load-cycle-1");
   });
 });
